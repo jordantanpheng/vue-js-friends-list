@@ -1,34 +1,31 @@
 <template>
   <div>
     <div>
-      <h1>Participants list</h1>
-      <ol>
-        <li>John Doe</li>
-        <li>Robin Hood</li>
-        <li>Chuck Norris</li>
-      </ol>
+	  <h1>Participants list</h1>
+	  <participants-list :list="participants" @removed="removeParticipant($event)"></participants-list>
     </div>
-
     <h3>New participant</h3>
-    <form @submit.prevent="addNewParticipant()">
-      <label>Firstname</label>
-      <input type="text">
-      <label>Lastname</label>
-      <input type="text">
-      <button>Add new participant</button>
-    </form>
+    <new-participant-form @added="addNewParticipant($event)"></new-participant-form>
   </div>
 </template>
 
 <script>
+  import ParticipantsList from "./ParticipantsList.vue";
+  import NewParticipantForm from "./NewParticipantForm.vue";
   export default {
+    components: {NewParticipantForm, ParticipantsList},
     data() {
-      return {};
+      return {
+	    participants: []
+	  };
     },
     methods: {
-      addNewParticipant() {
-        // dunno, what's next?
-      }
+      addNewParticipant(newParticipant) {
+        this.participants.push(newParticipant);
+      },
+	  removeParticipant(participant) {
+	    this.participants.remove(participant);
+	  }
     }
   };
 </script>
